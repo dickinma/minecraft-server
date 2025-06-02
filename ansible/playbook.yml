@@ -1,0 +1,52 @@
+---
+- name: Setting Up Minecraft
+  hosts: all
+  become: yes
+  user: ubuntu
+
+  tasks:
+
+    - name: Update apt cache (Needed for java)
+      ansible.builtin.apt:
+        update_cache: yes
+      become: true
+
+    - name: Install Java
+      ansible.builtin.apt:
+        name: openjdk-21-jdk
+        state: present
+      become: true
+
+    - name: Create Minecraft Directory
+      ansible.builtin.file:
+        path: /minecraft
+        state: directory
+        mode: '0755'
+
+    - name: Own /minecraft directory
+      ansible.builtin.shell: sudo chown -R ubuntu:ubuntu /minecraft
+
+    - name: Download minecraft
+      ansible.builtin.shell: wget https://piston-data.mojang.com/v1/objects/e6ec2f64e6080b9b5d9b471b291c33cc7f509733/server.jar
+      args:
+        # changes to the directory BEFORE running the command
+        chdir: /minecraft/
+
+    - name: Accept EULA
+      copy:
+        content: "eula=true\n"
+        dest: /minecraft/eula.txt
+    
+    - name: Create minecraft service
+      template:
+        src: minecraft.service.j2
+        dest: /etc/systemd/system/minecraft.service
+    
+    - name: Start daemon on server
+      systemd:
+        name: minecraft.service
+        enabled: yes
+        state: started
+        daemon_reload: yes
+
+

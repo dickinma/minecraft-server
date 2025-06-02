@@ -1,0 +1,13 @@
+[Unit]
+Description=Minecraft Service
+Wants=network.target
+After=network.target
+
+[Service]
+User=ubuntu
+WorkingDirectory=/minecraft/
+ExecStart=/usr/bin/java -Xms1G -Xmx2G -jar server.jar --nogui
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

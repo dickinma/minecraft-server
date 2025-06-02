@@ -37,6 +37,14 @@ Source List So far:
 - https://developer.hashicorp.com/terraform/language
 - https://dev.to/andreagrandi/getting-latest-ubuntu-ami-with-terraform-33gg
 - https://cloudkatha.com/how-to-create-security-groups-in-aws-using-terraform/
+- https://developer.hashicorp.com/terraform/cli/commands/apply#auto-approve (found from a stackoverflow post when googling)
+- https://linuxbuz.com/devops/ansible-playbook-hosts-option
+- https://docs.ansible.com/ansible/latest/collections/ansible/builtin/shell_module.html
+- https://stackoverflow.com/questions/22844905/how-to-create-a-directory-using-ansible
+- https://www.middlewareinventory.com/blog/ansible-copy-examples/
+- https://www.digitalocean.com/community/tutorials/how-to-create-and-use-templates-in-ansible-playbooks
+- https://docs.ansible.com/ansible/latest/collections/ansible/builtin/systemd_service_module.html#ansible-collections-ansible-builtin-systemd-service-module
+- 
 - 
 
 

@@ -86,3 +86,7 @@ resource "aws_instance" "minecraft_server" {
     Name = "MinecraftServer"
   }
 }
+
+output "public_ip" {
+  value = aws_instance.minecraft_server.public_ip
+}
