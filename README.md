@@ -8,7 +8,7 @@
 
 So far the process will look like:
 - User changes script permissions to executable
-- Instruct the user to input the AWS credentials in the env.example file (and remove the .example)
+- Instruct the user to paste the AWS credentials file in the "cred"
 - User needs to keygen within the ssh_creds directory
 ssh-keygen -t rsa -b 4096 -a 100 -f minecraft-key
 - 
@@ -35,10 +35,11 @@ TO-DO:
 
 - Finished terraform, ansible.
 - Need to clean up:
-  - test loading aws creds to env. See if terraform gets the memo. Currently when I tested I just used my local ~/.aws/credentials file rather than env. 
+  - test loading aws creds to env. See if terraform gets the memo. [Finished, the credentials are pulled from "cred", from the terraform aws provider block]
   - Shutdown the service properly as the assignment says.
   - Suppress certain output if necessary, a bit cleaner.
   - write docs
+  - Create git ignore and add the SSH keys and aws credential files for good practice, despite it not ever being pushed. 
 
 
 
@@ -56,6 +57,6 @@ Source List So far:
 - https://www.middlewareinventory.com/blog/ansible-copy-examples/
 - https://www.digitalocean.com/community/tutorials/how-to-create-and-use-templates-in-ansible-playbooks
 - https://docs.ansible.com/ansible/latest/collections/ansible/builtin/systemd_service_module.html#ansible-collections-ansible-builtin-systemd-service-module
-- 
+- https://stackoverflow.com/questions/64124063/how-to-make-terraform-to-read-aws-credentials-file
 - 
 
