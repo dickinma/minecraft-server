@@ -35,11 +35,9 @@ TO-DO:
 
 - Finished terraform, ansible.
 - Need to clean up:
-  - test loading aws creds to env. See if terraform gets the memo. [Finished, the credentials are pulled from "cred", from the terraform aws provider block]
-  - Shutdown the service properly as the assignment says.
-  - Suppress certain output if necessary, a bit cleaner.
   - write docs
   - Create git ignore and add the SSH keys and aws credential files for good practice, despite it not ever being pushed. 
+  - shell script creates the ssh key in the proper file
 
 
 

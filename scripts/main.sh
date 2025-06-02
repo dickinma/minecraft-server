@@ -3,8 +3,13 @@
 # runs the download script
 #download tools if necessary
 source ./downloadtools.sh
-# Terraform setup
 
+# create the ssh keypair
+cd ..
+cd ssh_creds
+ssh-keygen -t rsa -b 4096 -a 100 -N '' -f minecraft-key
+
+# Terraform setup
 cd ..
 cd terraform
 terraform init
