@@ -15,18 +15,30 @@ ssh-keygen -t rsa -b 4096 -a 100 -f minecraft-key
 - User calls main script:
   - shell script to check for terraform, aws, and ansible- download if not installed. 
   - Runs terraform (init and apply)
-    - According to https://stackoverflow.com/questions/49743220/how-to-create-an-ssh-key-in-terraform I can create the ssh key pair, create the ubuntu instance, then use output to push private key variable (and public IP likely) to a .pem file (piping it with > prolly). Then deploy the ansible playbook onto the instance... 
-    - Could do this with a user created key, but might be cooler to with terraform created one. Less safe tho
-  - ansible next?
+    - *According to https://stackoverflow.com/questions/49743220/how-to-create-an-ssh-key-in-terraform I can create the ssh key pair, create the ubuntu instance, then use output to push private key variable (and public IP likely) to a .pem file (piping it with > prolly). Then deploy the ansible playbook onto the instance... 
+    - Could do this with a user created key, but might be cooler to with terraform created one. Less safe tho*
+  - Sleeps for 25 seconds, necessary for server to be up.
+  - Ansible SSH's into the server, user will have to type "yes" for this unfortunately.
+  - Ansible goes through playbook tasks
+    - Update apt cache (aka apt update)
+    - Install java via apt
+    - Create the minecraft directory, with correct perms.
+    - Change ownership of directory (this killed me during debugging)
+    - Download minecraft via wget
+    - Accept EULA (aka paste in content to the file)
+    - Create the minecraft service by inserting the premade service.j2 file.
+    - Start the service.
+    - *minecraft server restart after reboot (it takes a bit tho).*
 
 
 TO-DO:
 
-- terraform files (create instance with correct networking, ssh pair creating) **DONE** *(did it with an already created key pair in a different directory. We can change this later...)*
-- Modify shell scripts to push init and apply terraform. Shell script addition for the ssh and ip info for ansible.
-- Create Ansible playbook (docker image, minecraft, etc)
-- Configure to restart when instance reboots and proper shut-down (unknown rn)
-- Documentation and further automation.
+- Finished terraform, ansible.
+- Need to clean up:
+  - test loading aws creds to env. See if terraform gets the memo. Currently when I tested I just used my local ~/.aws/credentials file rather than env. 
+  - Shutdown the service properly as the assignment says.
+  - Suppress certain output if necessary, a bit cleaner.
+  - write docs
 
 
 
@@ -47,8 +59,3 @@ Source List So far:
 - 
 - 
 
-
-General Notes (Terraform edition):
-- Resources are the main method to create infrastructure in the terraform config files. 
-- data can be used to look up key information (i.e. a recent aws ami) to then use in resource creation.
-- Terrraform validate is goated to check if the config files are set up correctly:D
