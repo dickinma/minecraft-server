@@ -37,7 +37,6 @@ TO-DO:
 - Need to clean up:
   - write docs
   - Create git ignore and add the SSH keys and aws credential files for good practice, despite it not ever being pushed. 
-  - shell script creates the ssh key in the proper file
 
 
 
@@ -56,5 +55,16 @@ Source List So far:
 - https://www.digitalocean.com/community/tutorials/how-to-create-and-use-templates-in-ansible-playbooks
 - https://docs.ansible.com/ansible/latest/collections/ansible/builtin/systemd_service_module.html#ansible-collections-ansible-builtin-systemd-service-module
 - https://stackoverflow.com/questions/64124063/how-to-make-terraform-to-read-aws-credentials-file
+- https://askubuntu.com/questions/694769/how-to-script-ssh-keygen-with-no-password
+- 
+
+
+# Deploy a Minecraft Server
+
+## Requirements
+
+### Tools 
+
+The main tools used include:
 - 
 
