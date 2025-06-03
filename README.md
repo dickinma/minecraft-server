@@ -58,13 +58,51 @@ Source List So far:
 - https://askubuntu.com/questions/694769/how-to-script-ssh-keygen-with-no-password
 - 
 
+You don't need to go step by step over the different commands as these will live in your scripts.
+
+The README file/tutorial needs to contain the following:
+
+    Background: What will we do? How will we do it? 
+    Requirements:
+        What will the user need to configure to run the pipeline?
+        What tools should be installed?
+        Are there any credentials or CLI required?
+        Should the user set environment variables or configure anything?
+    Diagram of the major steps in the pipeline. 
+    List of commands to run, with explanations.
+    How to connect to the Minecraft server once it's running?
+
+
 
 # Deploy a Minecraft Server
 
+## Backgound
+
+The purpose of this repository is to create a minecraft server without needing to access the aws dashboard, the aws instance, or needing to use any CLI commands besides the setup. 
+
+To do this, at a high level, I essentially uses shell script(s) to automate the entire process of:
+- Using terraform to create the aws instance using the users aws credentials, 
+- An ansible playbook will then be ran to access via SSH,
+- Then do a series of tasks to download the necessary resources for the minecraft server,
+- Followed by creating a systemd service file to keep the minecraft server running.
+
+
 ## Requirements
+
+# User Configuration
+No specific configuration is needed to run the pipeline, other than:
+1. Pasting their AWS credentials in the cred file *(under `aws_creds/cred`)*
+2. Make sure the shell scripts are executable with `chmod +x [file]`
+
+Besides that, the user can decide to create their own SSH keypair if they desire, though they will need to:
+- Name it `minecraft-key` 
+- create it in the ssh_creds directory
+- and comment out the creation of the key in the 'main.sh' script *(i.e. `ssh-keygen -t rsa -b 4096 -a 100 -N '' -f minecraft-key`)*.
+
+Other than that, the script should configure all that is necessary.
 
 ### Tools 
 
 The main tools used include:
-- 
+- Terraform, AWS CLI, and Ansible. 
 
