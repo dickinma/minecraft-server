@@ -5,9 +5,17 @@
 source ./downloadtools.sh
 
 # create the ssh keypair
-cd ..
-cd ssh_creds
-ssh-keygen -t rsa -b 4096 -a 100 -N '' -f minecraft-key
+
+SSH_FILE="../ssh_creds/minecraft-key"
+if [ -e "$SSH_FILE" ]; then
+    echo "SSH file exists. Continuing without creation"
+else
+    echo "File does not exist. Creating key"
+    cd ..
+    cd ssh_creds
+    ssh-keygen -t rsa -b 4096 -a 100 -N '' -f minecraft-key
+fi
+
 
 # Terraform setup
 cd ..
