@@ -1,17 +1,5 @@
-# Minecraft Server
-
-*The following is just random things that need done to run the code properly so I don't forget later:*
-
-    - *According to https://stackoverflow.com/questions/49743220/how-to-create-an-ssh-key-in-terraform I can create the ssh key pair, create the ubuntu instance, then use output to push private key variable (and public IP likely) to a .pem file (piping it with > prolly). Then deploy the ansible playbook onto the instance... 
-
-***TO-DO:***
-- Finished terraform, ansible.
-- Need to clean up:
-  - write docs **Partially Done**
-  - Create git ignore and add the SSH keys and aws credential files for good practice, despite it not ever being pushed. 
-- Create shutdown script.
-
 # Deploy a Minecraft Server
+*By Matthew Martin*
 
 ## Backgound
 
@@ -31,7 +19,8 @@ No specific configuration is needed to run the pipeline, other than:
 1. Pasting their AWS credentials in the cred file *(under `aws_creds/cred`)*
 2. Make sure the shell scripts are executable with `chmod +x [file]`
 
-Besides that, the user can decide to create their own SSH keypair if they desire, though they will need to:
+***[OPTIONAL]***
+The user can decide to create their own SSH keypair if they desire, though they will need to, as the script will create one:
 - Name it `minecraft-key` 
 - create it in the ssh_creds directory
 - and comment out the creation of the key in the 'main.sh' script *(i.e. `ssh-keygen -t rsa -b 4096 -a 100 -N '' -f minecraft-key`)*.
