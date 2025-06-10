@@ -34,5 +34,5 @@ chmod 600 ../ssh_creds/minecraft-key
 echo "$PUBLIC_IP ansible_user=ubuntu ansible_ssh_private_key_file=../ssh_creds/minecraft-key" > ../ansible/inventory
 
 # hostkey checking env variable will bypass the yes/no/fingerpeint prompt
-ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i ../ansible/inventory ../ansible/playbook.yml
+ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i ../ansible/inventory ../ansible/startPlaybook.yml
 

@@ -12,7 +12,8 @@ terraform {
 
 provider "aws" {
   region = var.aws_region
-  shared_credentials_file = "../aws_creds/cred"
+  shared_credentials_file = "../aws-creds/cred"
+  profile= "default"
 }
 
 # defines the key pair for the instance
