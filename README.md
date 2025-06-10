@@ -31,7 +31,8 @@ Other than that, the script should configure all that is necessary.
 
 The main tools used include:
 - Terraform *(with AWS CLI)* and Ansible. 
-This uses the latest versions of each, and the script includes an install using pacman for them. If you do not have any of these tools, I recommend installing them manually to your local device before running the script. 
+This uses the latest versions of each, and the script includes an install using pacman for them. 
+- If you do not have any of these tools, or run into an error installing them via the scripts, I recommend installing them manually to your local device before running the script. 
 
 ### Credentials and CLI
 
@@ -64,12 +65,38 @@ This is assuming the user already pasted their AWS credentials in the cred file 
 
 No extra configuration is needed beyond whats mentioned above, as the scripts should run the pipeline properly.
 
-## Pipeline Diagram
+## Pipeline
 
-![alt text](pipeline-diagram.png)
+### Pipeline Diagram
+
+![a gorgeous diagram of the process pipeline](pipeline-diagram.png)
+
+### General Pipeline Overview
+
+Shell script is used to mediate the processes and tools necessary to create and service the AWS instance. After the user makes the scripts executable: 
+
+- the `downloadtools.sh` script will download Terraform, AWS CLI, and Ansible,
+- Create ssh keys in shh_creds if they don't exist.
+
+Then we move into the terraform directory to `init` and `apply` the defined settings. In general, this will create the aws instance, configure security groups, add the SSH keys, and output the instance's public IP.
+
+Once the instance is set up, the script process will sleep for a moment to make sure the instance is fully set-up before SSH'ing in. After this, the script will add the server's IP, username, and keys to the ansible inventory to access.
+
+Once all this set-up is done, we will run the ansible-playbook, which will:
+- Access the instance via SSH,
+- Update apt cache,
+- Create minecraft directory,
+- own the directory,
+- download minecraft,
+- accept EULA,
+- create the minecraft service (using a premade .j2 file found in /ansible/templates),
+- and finally start the service.
+
+The final step of the pipeline is to output the public IP once again for the user to connect. 
 
 
 ## Steps to Run
+Make sure to paste in your AWS credentials in `aws-creds/cred` as mentioned above before the following steps.
 
 1. Change to `scripts` directory:
 
@@ -101,17 +128,45 @@ aws_session_token=<token here>
 
 Now wait and watch as the script creates the instance and runs the server. It should take about one to two minutes.
 
+
+## Steps to Shutdown
+
+1. Change to `scripts` directory:
+
+```
+cd scripts
+```
+2. Make `shutdown.sh` executable:
+
+```
+chmod +x shutdown.sh
+```
+3. Run `shutdown.sh`:
+
+```
+./shutdown.sh
+```
+Now wait a few moments while the server is being destroyed. It is set to auto-approve input, hence no input is necessary. 
+
 ## Connecting to the Server
   
+1. In minecraft you will click the `Multiplayer` button from the homescreen, then `Add Server`.
+
+2. Next paste in the server IP that was output when setting up the server in the `Server Address` section.
+3. Add the following to the end of the `Server Address`, which represents minecrafts default port:
+```
+:25565
+```
+4. Press done and connect!
+
 
 ## Sources Used:
-- CoPilot for questions and general info
 - https://stackoverflow.com/questions/49743220/how-to-create-an-ssh-key-in-terraform
 - https://developer.hashicorp.com/terraform/tutorials/aws-get-started/aws-build
 - https://developer.hashicorp.com/terraform/language
 - https://dev.to/andreagrandi/getting-latest-ubuntu-ami-with-terraform-33gg
 - https://cloudkatha.com/how-to-create-security-groups-in-aws-using-terraform/
-- https://developer.hashicorp.com/terraform/cli/commands/apply#auto-approve (found from a stackoverflow post when googling)
+- https://developer.hashicorp.com/terraform/cli/commands/apply#auto-approve
 - https://linuxbuz.com/devops/ansible-playbook-hosts-option
 - https://docs.ansible.com/ansible/latest/collections/ansible/builtin/shell_module.html
 - https://stackoverflow.com/questions/22844905/how-to-create-a-directory-using-ansible
@@ -120,6 +175,5 @@ Now wait and watch as the script creates the instance and runs the server. It sh
 - https://docs.ansible.com/ansible/latest/collections/ansible/builtin/systemd_service_module.html#ansible-collections-ansible-builtin-systemd-service-module
 - https://stackoverflow.com/questions/64124063/how-to-make-terraform-to-read-aws-credentials-file
 - https://askubuntu.com/questions/694769/how-to-script-ssh-keygen-with-no-password
-- 
 
 

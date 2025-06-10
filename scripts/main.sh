@@ -36,3 +36,4 @@ echo "$PUBLIC_IP ansible_user=ubuntu ansible_ssh_private_key_file=../ssh_creds/m
 # hostkey checking env variable will bypass the yes/no/fingerpeint prompt
 ANSIBLE_HOST_KEY_CHECKING=False ansible-playbook -i ../ansible/inventory ../ansible/startPlaybook.yml
 
+echo "Connect using this ip: $PUBLIC_IP"
